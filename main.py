@@ -45,6 +45,22 @@ def start(message):
     update_messages_count(user_id)
 
 
+@bot.message_handler(commands=["text"])
+def choise_lang(message):
+    if message.chat.type == 'private':
+        if message.text == '🇺🇸 English':
+            bot.send_message(message.chat.id, 'Enter you name pleace')
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            item1 = types.KeyboardButton('for russian language course')
+            item2 = types.KeyboardButton('Medical')
+            item3 = types.KeyboardButton('tech Univercity')
+            markup.add(item2, item1, item3)
+        elif message.text == '🇷🇺 Русский':
+            bot.send_message(message.chat.id, 'Введите своё имя')
+        elif message.text == '🇪🇬 عربي':
+            bot.send_message(message.chat.id, 'أدخل أسمك')
+
+
 @bot.message_handler(commands=["stats"])
 def get_stats(message):
     db_object.execute("SELECT * FROM users ORDER BY messages DESC LIMIT 10")
