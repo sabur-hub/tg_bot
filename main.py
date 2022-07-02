@@ -45,9 +45,9 @@ def start(message):
     update_messages_count(user_id)
 
 
-@bot.message_handler(commands=["text"])
+@bot.message_handler(content_types=["text"])
 def choise_lang(message):
-    if message.chat.type == 'private':
+    if message.chat.id == 'private':
         if message.text == '🇺🇸 English':
             bot.send_message(message.chat.id, 'Enter you name pleace')
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
