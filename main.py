@@ -1,5 +1,6 @@
 import os
 import telebot
+from telebot import types
 import logging
 import psycopg2
 from config import *
@@ -23,10 +24,19 @@ def update_messages_count(user_id):
 def start(message):
     user_id = message.from_user.id
     username = message.from_user.username
-    bot.reply_to(message, f"Hello, {username}!")
-
     db_object.execute(f"SELECT id FROM users WHERE id = {user_id}")
     result = db_object.fetchone()
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item1 = types.KeyboardButton('🇷🇺 Русский')
+    item2 = types.KeyboardButton('🇺🇸 English')
+    item3 = types.KeyboardButton('🇪🇬 عربي')
+
+    markup.add(item2, item1, item3)
+
+    bot.send_message(message.chat.id, 'Привет выберите язык для продолжения взаимодействия.'
+                                      'Hi, select a language to continue the interaction.'
+                                      ' اَلسَّلَامُ عَلَيْكُم حدد اللغة لمواصلة التفاعل.'.format(message.from_user),
+                     reply_markup=markup)
 
     if not result:
         db_object.execute("INSERT INTO users(id, username, messages) VALUES (%s, %s, %s)", (user_id, username, 0))
