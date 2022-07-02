@@ -55,6 +55,7 @@ def choise_lang(message):
             item2 = types.KeyboardButton('Medical')
             item3 = types.KeyboardButton('tech Univercity')
             markup.add(item2, item1, item3)
+            bot.send_message(message.chat.id, '🇺🇸 English', reply_markup=markup)
         elif message.text == '🇷🇺 Русский':
             bot.send_message(message.chat.id, 'Введите своё имя')
         elif message.text == '🇪🇬 عربي':
